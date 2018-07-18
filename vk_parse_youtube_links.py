@@ -33,6 +33,10 @@ def fetch_user_name(vk, id):
 def find_youtube_links_in_attachment(vk, attachment):
     if attachment['type'] != 'video':
         return
+    # Здесь важно использовать именно get(), поскольку ключ platform задан
+    # не всегда. Подозреваю, что на свои видео vk platform не задаёт
+    if attachment['video'].get('platform') != 'YouTube':
+        return
     videos = vk.video.get(videos='{}_{}'.format(
         attachment['video']['owner_id'], attachment['video']['id']
     ))
